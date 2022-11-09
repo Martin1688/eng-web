@@ -1,0 +1,47 @@
+<div class="mainDiv">
+
+    <div class="row">
+        <table class="col-12">
+            <tr>
+                <td class="center" colspan="3">
+                    <h2>選取正確的中文字</h2>
+                </td>
+            </tr>
+            <tr *ngIf="message">
+                <td class="center" colspan="3">
+                    <span class="alert alert-danger">{{message}}</span>
+                </td>
+            </tr>
+            <tr *ngIf="wordAry">
+                <td class="left"><span>{{wIndex}}/{{wordAry.length}}</span></td>
+                <td class="left">
+                    <h4>{{currentWord!.eng}}</h4>
+                </td>
+                <td class="right"><span class="justify-content-end" *ngIf="errCount > 0">錯誤數：{{errCount}}</span></td>
+            </tr>
+
+            <tr *ngIf="false">
+                <td class="center" colspan="3">
+                    <h4>{{currentWord!.chi}}</h4>
+                </td>
+            </tr>
+            <tr *ngIf="currentChiAns">
+                <td class="left" colspan="3">
+                    <table>
+                        <tr *ngFor="let strChi of currentChiAns.chiary; let i = index" (click)="onSelected(i)">
+                            <td><input type="radio" name="choice" value="i" style="margin-left: 30px;"></td>
+                            <td><span class="itemLeft">{{strChi}}</span></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div class="navbar fixed-bottom foot2nd">
+            <div class="row">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-success" (click)="reset()" *ngIf="redoFlag">重作</button>
+                    <button class="btn btn-danger" *ngIf="errCorrect" style="margin-left: 20px;"> {{errCorrect}}</button>
+                </div>
+            </div>
+        </div>
+    </div>

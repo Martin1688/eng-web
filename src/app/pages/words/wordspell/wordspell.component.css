@@ -1,0 +1,37 @@
+.left {
+    text-align: left;
+    padding-left: 15px;
+}
+
+.right {
+    text-align: right;
+    padding-right: 15px;
+}
+
+.center {
+    text-align: center;
+}
+
+tr {
+    margin-top: 10px;
+}
+
+.foot2nd {
+    margin-bottom: 50px;
+    background-color: darkcyan;
+}
+
+.showOk {
+    padding-left: 50px;
+}
+
+.mainWord {
+    margin-top: 50px;
+    border-radius: 4px;
+    background-color: gainsboro;
+}
+
+.rowSpace {
+    margin: 10px;
+    padding: 10px;
+}

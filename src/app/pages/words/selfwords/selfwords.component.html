@@ -1,0 +1,57 @@
+<div class="mainDiv" style="height: 500px;">
+    <h3 class="pagetitle">英文單字自己輸入<span *ngIf="isMobile">(手機)</span></h3>
+    <h4 class="pagedescript">背誦練習的英文單字是依自己需要輸入(可能來自課文、雜誌或報紙中)，而不是由字庫中自動選出來。</h4>
+    <form #queryForm="ngForm">
+        <div role="alert" *ngIf="message" class="alert alert-danger" (click)="message=''">
+            {{ message }}
+        </div>
+        <div class="input-group fMargin">
+            <div class="input-group-prepend">
+                <span class="input-group-text">英文：</span>
+            </div>
+            <input class="form-control" type="text" (keyup.enter)="onEnter()" (keyup)="getWordIdsFirstWay($event)" id="WordIdFirstWay" name="WordIdFirstWay" [(ngModel)]="newWord.eng" autocapitalize="none" autocomplete="off"/>
+            <div class="sub-list">
+                <br>
+                <ul *ngIf="wordList1">
+                    <li *ngFor="let item of wordList1" (click)="itemSelected(item)" [value]="item">{{item}}</li>
+                </ul>
+            </div>
+            <!-- <datalist id="dynmicWordIds">
+                <option *ngFor="let item of wordList1 " [value]="item ">{{item}}</option> list="dynmicWordIds"
+            </datalist> -->
+        </div>
+        <div class="input-group fMargin ">
+            <div class="input-group-prepend ">
+                <span class="input-group-text " [ngStyle]="{height: hgt+ 'px'}">中文：</span>
+            </div>
+            <textarea id="chi" name="chi" [(ngModel)]="newWord.chi" class="form-control " rows="3 "></textarea>
+        </div>
+
+        <div class="input-group fMargin " *ngIf="wordAry.length> 0">
+            <div class="input-group-prepend">
+                <span class="input-group-text">字庫：</span>
+            </div>
+            <select class="form-control" multiple size="5">
+            <option *ngFor="let word of wordAry">{{word.eng}}</option>
+        </select>
+        </div>
+        <div class="input-group fMargin " *ngIf="sentenceAry.length> 0">
+            <div class="input-group-prepend">
+                <span class="input-group-text">例句：</span>
+            </div>
+            <select id="sentens" name="sentens" class="form-control" [(ngModel)]="newWord.sentence">
+            <option *ngFor="let sentence of sentenceAry">{{sentence}}</option>
+        </select>
+        </div>
+
+    </form>
+
+    <div class="navbar fixed-bottom foot2nd">
+        <div class="row">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button *ngIf="newWord.chi" type="button" class="btn btn-success" (click)="Add2List()" title="加入字庫">加入</button>
+                <button *ngIf="wordAry.length > 0" type="button" class="btn btn-success" (click)="Save2Local()" title="加入本次字庫，上次儲存之字庫會被清除">儲存</button>
+            </div>
+        </div>
+    </div>
+</div>

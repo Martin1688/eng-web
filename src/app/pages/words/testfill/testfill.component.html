@@ -1,0 +1,53 @@
+<div class="mainDiv">
+
+    <div class="row">
+
+
+        <table class="col-12">
+            <tr>
+                <td class="text-center rowSpace" colspan="2">
+                    <h2>單字填空測驗</h2>
+                </td>
+            </tr>
+            <tr *ngIf="message">
+                <td class="text-center rowSpace" colspan="2">
+                    <span class="alert alert-danger">{{message}}</span>
+                </td>
+            </tr>
+            <tr *ngIf="wordAry" class="rowSpace">
+                <td class="text-left"><span>{{wIndex}}/{{wordAry.length}}</span></td>
+                <td class="text-right"><span class="justify-content-end">錯誤數：{{errCount}}</span></td>
+            </tr>
+            <tr>
+                <td class="text-left rowSpace" colspan="2">
+                    <h4>{{currentWord!.sentence}}</h4>
+                </td>
+            </tr>
+            <tr *ngIf="chiHint">
+                <td class="text-right" colspan="2">
+                    <span>{{currentWord!.chi}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center" colspan="2">
+                    <input class="mainWord" type="text" [(ngModel)]="exWord" (keyup.enter)="onEnter()" autocapitalize="none">
+                    <!-- <input type="text" [(ngModel)]="exWord" (keyup.enter)="onEnter()"> -->
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div class="navbar fixed-bottom foot2nd">
+        <div class="row">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-success" (click)="reset()" *ngIf="redoFlag">重作</button>
+                <button class="btn btn-danger" *ngIf="errCorrect" style="margin-left: 20px;"> {{errCorrect}}</button>
+                <button type="button" class="btn btn-success" (click)="hint()" *ngIf="!redoFlag">提示</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>

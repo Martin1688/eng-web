@@ -1,0 +1,65 @@
+<br />
+<br />
+<br />
+<div class="row">
+    <div class="col-12">
+        <p class="lead">搜尋使用者 </p>
+        <div *ngIf="formError" class="alert alert-danger">
+            {{ formError }}</div>
+        <form>
+            <div class="input-group fMargin">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" (click)="credentials.email='';formError=''">Email：</span>
+                </div>
+                <input class="form-control" type="email" ((blur))="onEnter()" (keyup.enter)="onEnter()" (keyup)="getMailsFirstWay($event)" id="email" name="email" [(ngModel)]="credentials.email" autocapitalize="none" autocomplete="off"/>
+                <div class="sub-list">
+                    <br>
+                    <ul *ngIf="mailList1">
+                        <li *ngFor="let item of mailList1" (click)="itemSelected(item)">{{item}}</li>
+                    </ul>
+                </div>
+                <!-- <datalist id="dynmicMail">  list="dynmicMail"
+                    <option *ngFor="let item of mailList1 " [value]="item ">{{item}}</option>
+                </datalist> -->
+            </div>
+            <div class="input-group fMargin">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">姓 名：</span>
+                </div>
+                <input type="email" class="form-control" id="name" name="name" placeholder="輸入 姓名 " [(ngModel)]="credentials.name">
+            </div>
+            <div class="input-group fMargin">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">級 別：</span>
+                </div>
+                <select id="grade" name="grade" class="form-control" [(ngModel)]="credentials.grade">
+                    <option [ngValue]="grad" *ngFor="let grad of gradeops">{{grad}}</option>
+                  </select>
+
+            </div>
+            <div class="input-group fMargin">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">角 色：</span>
+                </div>
+                <select id="role" name="role" class="form-control" [(ngModel)]="credentials.role">
+                    <option [ngValue]="rol" *ngFor="let rol of roleops">{{rol}}</option>
+                  </select>
+
+            </div>
+            <div class="btn-group  fMargin" role="group" aria-label="Basic example">
+                <button type="button" role="button" class="btn btn-success" (click)="onSubmit()">修改</button>
+                <button type="button" class="btn btn-success" style="margin-left: 100px;" (click)="onDelete()">刪除</button>
+            </div>
+        </form>
+        <!--<div>
+        <form enctype="multipart/form-data ">
+            <input type="file " (change)="onUpfile($event.target.files) " id="myFile " name="myFile " class="FClass ">
+            <div class="col-12 ">
+                <span *ngIf="uploadFileName ">上傳檔名：{{uploadFileName}}</span>
+            </div>
+            <button  type="button " role="button " class="btn btn-primary " (click)="pressBtn() ">上傳字庫</button>
+        </form>
+
+    </div>
+    <app-sidebar [content]="pageContent.sidebar " class="col-12 col-md-4 "></app-sidebar> -->
+    </div>

@@ -1,0 +1,58 @@
+<div class="mainDiv">
+
+    <div class="row">
+
+
+        <table class="col-12">
+            <tr>
+                <td class="center">
+                    <h2>英文單字自動撥放</h2>
+                </td>
+            </tr>
+            <tr *ngIf="message">
+                <td class="center">
+                    <span class="alert alert-danger">{{message}}</span>
+                </td>
+            </tr>
+            <tr *ngIf="wordAry">
+                <td class="left"><span>{{wIndex}}/{{wordAry.length}}</span></td>
+                <td class="right"><span class="justify-content-end">{{rptCount}}/{{totalRpt}} </span></td>
+            </tr>
+            <tr>
+                <td class="center">
+                    <h4>{{currentWord.eng}}</h4>
+                </td>
+            </tr>
+            <tr>
+                <td class="center">
+                    <h4>{{currentWord.chi}}</h4>
+                </td>
+            </tr>
+            <tr *ngIf="currentWord.sentence">
+                <td class="center">
+                    <h4>{{currentWord.sentence}}</h4>
+                </td>
+            </tr>
+            <!-- <tr>
+                <td class="center ">
+                    <input class="mainWord" type="text" [(ngModel)]="exWord" (keydown)="onKeydown($event)">
+                    <input type="text" [(ngModel)]="exWord" (keyup.enter)="onEnter()"> 
+                </td>
+            </tr>-->
+        </table>
+
+    </div>
+
+    <div class="navbar fixed-bottom foot2nd">
+        <div class="row">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" id="suspenseBtn" name="suspenseBtn" class="btn btn-success" (click)="suspense()" style="display: none;">自動撥放</button>
+                <button type="button" class="btn btn-success" (click)="suspense()" style="display: none;">{{iswork4ShowText}}</button>
+                <button type="button" class="btn btn-success" (click)="suspenseShow()">{{btnSuspenseText}}</button>
+                <!-- btnSuspenseText === '暫停' -->
+            </div>
+        </div>
+
+        <td class="left"></td>
+        <!-- <td class="showOk"><button type="button" class="btn btn-success">{{ok}}</button></td> -->
+    </div>

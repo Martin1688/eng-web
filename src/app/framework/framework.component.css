@@ -1,0 +1,12 @@
+.dropdown:hover>.dropdown-menu>.dropdown-item:focus {
+    background-color: #c5ddf7!important
+}
+
+.dropdown:hover>.dropdown-menu>.dropdown-item:hover {
+    background-color: #c5ddf7;
+}
+
+.navbar-toggler {
+    color: whitesmoke;
+    font-family: DFKai-sb;
+}

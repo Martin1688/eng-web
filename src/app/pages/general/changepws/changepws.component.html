@@ -1,0 +1,63 @@
+<!-- <app-page-header [content]="pageContent.header"></app-page-header> -->
+<br/>
+<br/>
+<br/>
+<div class="row">
+    <div class="col-12">
+        <p class="lead">修改個人密碼 </p>
+        <form (submit)="onChangePassword()">
+            <div role="alert" *ngIf="formError" class="alert alert-danger">
+                {{ formError }}</div>
+            <div class="input-group fMargin">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Email：</span>
+                </div>
+                <input type="email" class="form-control" id="email" name="email" placeholder="輸入 email " [(ngModel)]="credentials.email">
+            </div>
+            <div class="input-group fMargin">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">舊密碼：</span>
+                </div>
+                <input [type]="oldPasswordTextType?'password':'text'" class="form-control" id="oldPassword" name="oldPassword" placeholder="輸入舊密碼" [(ngModel)]="oldPassword" autocomplete="off">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                      <i class="fa" [ngClass]="{
+                        'fa-eye-slash': oldPasswordTextType,
+                        'fa-eye': !oldPasswordTextType
+                      }" (click)="setOldPasswordText()"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="input-group fMargin">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">新密碼：</span>
+                </div>
+                <input [type]="passwordTextType?'password':'text'" class="form-control" id="password" name="password" placeholder="輸入新密碼" [(ngModel)]="credentials.password" autocomplete="off">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                      <i class="fa" [ngClass]="{
+                        'fa-eye-slash': passwordTextType,
+                        'fa-eye': !passwordTextType
+                      }" (click)="setPasswordText()"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="input-group fMargin">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">再確認：</span>
+                </div>
+                <input id="password2" name="password2" [type]="newPasswordTextType?'password':'text'" class="form-control" placeholder="確認新密碼" [(ngModel)]="newPassword" autocomplete="off">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                      <i class="fa" [ngClass]="{
+                        'fa-eye-slash': newPasswordTextType,
+                        'fa-eye': !newPasswordTextType
+                      }" (click)="setNewPasswordText()"></i>
+                    </span>
+                </div>
+            </div>
+            <button type="submit" role="button" class="btn btn-primary fMargin">送出</button>
+        </form>
+    </div>
+    <!-- <app-sidebar [content]="pageContent.sidebar" class="col-12 col-md-4"></app-sidebar> -->
+</div>

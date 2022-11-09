@@ -1,0 +1,32 @@
+<div class="mainDiv">
+    <h3 class="pagetitle">練習字數與次數設定</h3>
+    <h4 class="pagedescript">請先設定練習字數與練習次數再開始練習，未設定前無法練習</h4>
+    <form (ngSubmit)="onSubmit()" #queryForm="ngForm">
+        <div role="alert" *ngIf="formError" class="alert alert-danger">
+            {{ formError }}
+        </div>
+        <div class="input-group fMargin">
+            <div class="input-group-prepend">
+                <span class="input-group-text">練習字數：</span>
+            </div>
+            <select class="col-12 form-control ctrlColor" id="exCount" required [(ngModel)]="model.exCount" name="exCount">
+            <option *ngFor="let count of viewModel.exCount" [value]="count">{{count}}</option>
+          </select>
+        </div>
+        <div class="input-group fMargin">
+            <div class="input-group-prepend">
+                <span class="input-group-text">練習次數：</span>
+            </div>
+            <select class="col-12 form-control ctrlColor" id="rptCount" required [(ngModel)]="model.rptCount" name="rptCount">
+            <option *ngFor="let rpt of viewModel.rptCount" [value]="rpt">{{rpt}}</option>
+          </select>
+        </div>
+        <div class="row fMargin" *ngIf="user">
+            <div class="col-12">
+                <div class="btn-group" role="group" aria-label="功能"></div>
+                <button type="submit" class="btn btn-primary">設定</button>
+                <button type="button" class="btn btn-primary" (click)="jobDone()" style="margin-left: 100px;">練習完成</button>
+            </div>
+        </div>
+    </form>
+</div>

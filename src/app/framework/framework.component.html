@@ -1,0 +1,66 @@
+<nav class="navbar fixed-top navbar-expand-md">
+    <div class="container">
+        <a routerLink="/" class="navbar-brand">英文生字記憶秘笈</a>
+        <button type="button" data-toggle="collapse" data-target="#navbarMain" class="navbar-toggler">
+            選單
+        </button>
+        <div id="navbarMain" class="navbar-collapse collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">設定</a>
+                    <ul class="dropdown-menu">
+                        <li><a routerLink="/words" class="dropdown-item">練習設定</a></li>
+                        <li *ngIf="isLoggedIn()"><a routerLink="/words/selfwordset" class="dropdown-item">單字輸入設定</a></li>
+                        <li *ngIf="isLoggedIn()"><a routerLink="/general/selfuserset" class="dropdown-item">帳號自我管理</a></li>
+                        <li *ngIf="userRole()==='admin'"><a routerLink="/general/admin" class="dropdown-item">管理員</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    練習
+                  </a>
+                    <ul class="dropdown-menu">
+                        <li><a routerLink="/words/spellex" class="dropdown-item">單字拼字練習</a></li>
+                        <li *ngIf="isLoggedIn()"><a routerLink="/words/engselectchiex" class="dropdown-item">英選中練習</a></li>
+                        <li *ngIf="false"><a routerLink="/words/autospell" class="dropdown-item">自動語音拼字</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">測驗</a>
+                    <ul class="dropdown-menu">
+                        <li><a routerLink="/words/testspell" class="dropdown-item ">單字拼字測驗</a></li>
+                        <li *ngIf="isLoggedIn()"><a routerLink="/words/testselectchi" class="dropdown-item">英選中測驗</a></li>
+                        <li *ngIf="false"><a routerLink="/words/testfill" class="dropdown-item">單字填空測驗</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown">其他</a>
+                    <ul class="dropdown-menu">
+                        <li><a routerLink="/general/author" class="dropdown-item">關於</a></li>
+                        <li><a routerLink="/general/about" class="dropdown-item">功能說明</a></li>
+                    </ul>
+            </ul>
+            <ul class="navbar-nav  ms-auto mb-2 justify-content-end ">
+                <li class="nav-item" *ngIf="!isLoggedIn() ">
+                    <a routerLink="/general/login" class="nav-link ">登入</a>
+                </li>
+                <li class="nav-item dropdown" *ngIf="isLoggedIn() ">
+                    <a class="nav-link dropdown-toggle"  href="#"  role="button" data-bs-toggle="dropdown">{{getUsername()}}</a>
+                    <ul class="dropdown-menu ">
+                        <li><a class="dropdown-item"  href="#" (click)="doLogout()">登出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container content ">
+    <router-outlet></router-outlet>
+    <footer class="navbar fixed-bottom ">
+        <div class="row ">
+            <div class="col-12 ">
+                <small>&copy; 2020 潘丁瑜設計</small>
+            </div>
+        </div>
+    </footer>
+</div>

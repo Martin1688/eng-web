@@ -1,0 +1,42 @@
+<!-- <app-page-header [content]="pageContent.header"></app-page-header> -->
+<br/>
+<br/>
+<br/>
+<div class="row">
+    <div class="col-12">
+        <form>
+            <p class="lead">使用者帳號自我管理</p>
+            <div role="alert" *ngIf="formError" class="alert alert-danger">
+                {{ formError }}</div>
+            <div class="input-group fMargin">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">姓 名：</span>
+                </div>
+                <input type="email" class="form-control" id="name" name="name" placeholder="輸入 姓名 " [(ngModel)]="credentials.name">
+            </div>
+            <div class="input-group fMargin">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Email：</span>
+                </div>
+                <input type="email" class="form-control" id="email" name="email" placeholder="輸入 email " [(ngModel)]="credentials.email">
+            </div>
+            <div class="input-group fMargin">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">等 級：</span>
+                </div>
+                <input type="email" class="form-control" id="grade" name="grade" placeholder="輸入 email " [(ngModel)]="credentials.grade">
+            </div>
+            <div class="input-group fMargin">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">角 色：</span>
+                </div>
+                <input type="email" class="form-control" id="role" name="role" placeholder="輸入 email " [(ngModel)]="credentials.role">
+            </div>
+            <div class="btn-group fMargin" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-success" (click)="changePassword()">修改密碼</button>
+                <button type="button" class="btn btn-success" (click)="upGrade()">升級</button>
+                <button type="button" class="btn btn-success" (click)="downGrade()">降級</button>
+            </div>
+        </form>
+    </div>
+</div>

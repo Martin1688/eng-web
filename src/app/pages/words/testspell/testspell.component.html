@@ -1,0 +1,47 @@
+<div class="mainDiv">
+
+    <div class="row">
+
+
+        <table class="col-12">
+            <tr>
+                <td class="text-center">
+                    <h2 class="rowSpace">英文拼字測驗</h2>
+                </td>
+            </tr>
+            <tr *ngIf="message" class="rowSpace">
+                <td class="text-center">
+                    <span class="alert alert-danger">{{message}}</span>
+                </td>
+            </tr>
+            <tr *ngIf="wordAry" class="rowSpace">
+                <td class="left"><span>{{wIndex}}/{{wordAry.length}}</span></td>
+                <td class="right"><span class="justify-content-end" *ngIf="errCount > 0">錯誤數：{{errCount}}</span></td>
+            </tr>
+            <tr>
+                <td class="text-center rowSpace">
+                    <span style="font-size: larger;"><img src="../../../../assets/image/speaker.png" (click)="repeat()"> {{currentWord!.chi}}</span>
+                </td>
+            </tr>
+            <tr class="fMargin">
+                <td class="text-center rowSpace">
+                    <input class="mainWord" type="text" [(ngModel)]="exWord" (keyup.enter)="onEnter()" autocapitalize="none">
+                </td>
+            </tr>
+        </table>
+        <div class="col-12" id='tDiv'>
+
+        </div>
+    </div>
+
+    <div class="navbar fixed-bottom foot2nd">
+        <div class="row">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-success" (click)="reset()" *ngIf="redoFlag">重作</button>
+                <button class="btn btn-danger" *ngIf="errCorrect" style="margin-left: 20px;"> {{errCorrect}}</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>

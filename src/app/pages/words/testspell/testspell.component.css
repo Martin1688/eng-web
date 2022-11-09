@@ -1,0 +1,15 @@
+.foot2nd {
+    margin-bottom: 50px;
+    background-color: darkcyan;
+}
+
+.mainWord {
+    margin-top: 50px;
+    border-radius: 4px;
+    background-color: gainsboro;
+}
+
+.rowSpace {
+    margin: 10px;
+    padding: 10px;
+}

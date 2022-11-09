@@ -1,0 +1,59 @@
+<div class="mainDiv">
+
+    <div class="row">
+
+
+        <table class="col-12">
+            <tr>
+                <td class="center rowSpace">
+                    <h2>英文單字練習</h2>
+                </td>
+            </tr>
+            <tr *ngIf="message">
+                <td class="center rowSpace">
+                    <span class="alert alert-danger">{{message}}</span>
+                </td>
+            </tr>
+            <tr *ngIf="wordAry" class="rowSpace">
+                <td class="left"><span>{{wIndex}}/{{wordAry.length}}</span></td>
+                <td class="right"><span class="justify-content-end">{{rptCount}}/{{totalRpt}} </span></td>
+            </tr>
+            <tr>
+                <td class="center rowSpace">
+                    <span style="font-size: xx-large;"><img src="../../../../assets/image/speaker.png" (click)="repeat()"> {{currentWord!.eng}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="center rowSpace">
+                    <h4>{{currentWord!.chi}}</h4>
+                </td>
+            </tr>
+            <tr *ngIf="currentWord!.sentence">
+                <td class="center rowSpace">
+                    <h4>{{currentWord!.sentence}}</h4>
+                </td>
+            </tr>
+            <tr>
+                <td class="center ">
+                    <input class="mainWord" type="text" [(ngModel)]="exWord" (keydown)="onKeydown($event)" autocapitalize="none">
+                    <!-- <input type="text" [(ngModel)]="exWord" (keyup.enter)="onEnter()"> -->
+                </td>
+            </tr>
+        </table>
+        <div class="col-12" id='tDiv'>
+
+        </div>
+    </div>
+
+    <div class="navbar fixed-bottom foot2nd" *ngIf="false">
+        <div class="row">
+            <table class="col-12">
+                <tr>
+                    <td class="left"><button type="button" class="btn btn-success">設定</button></td>
+                    <!-- <td class="showOk"><button type="button" class="btn btn-success">{{ok}}</button></td> -->
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>

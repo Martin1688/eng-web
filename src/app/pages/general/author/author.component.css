@@ -1,0 +1,11 @@
+input:read-only {
+    background-color: gainsboro;
+}
+
+input,span,textarea{
+    background-color: transparent;
+    color: #235066;
+      font-family: 'Lobster', cursive;
+      font-weight: 800;
+
+}
