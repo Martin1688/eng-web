@@ -4,6 +4,7 @@ import { VocabularyService } from 'src/app/services/vocabulary.service';
 import { User } from 'src/app/classes/user';
 import { WordsRoutingModule } from '../words-routing.module';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-settingpage',
@@ -25,9 +26,9 @@ export class SettingpageComponent implements OnInit {
   };
   formError = '';
   ngOnInit(): void {
-    const logined =this.authService.isLoggedIn();
+    const logined = this.authService.isLoggedIn();
     //console.log(logined);
-    if(!logined){
+    if (!logined) {
       this.router.navigateByUrl('/general/login');
     }
     this.user = this.authService.getCurrentUser();
@@ -41,8 +42,8 @@ export class SettingpageComponent implements OnInit {
   onSubmit() {
     //console.log(this.model);
     //this.user =this.authService.getCurrentUser();
-    this.wordService.getWords(this.user!.email, this.model.exCount, this.model.rptCount, this.user!.grade)
-      .then(words => {
+    this.wordService.getWords(this.user!.email, this.model.exCount, this.model.rptCount, this.user!.grade).subscribe({
+      next: (words: any) => {
         const exWords = words.map((x: { wdId: any; eng: any; chi: any; grade: any; }) => {
           return { wdId: x.wdId, eng: x.eng, chi: x.chi, grade: x.grade }
         });
@@ -53,20 +54,51 @@ export class SettingpageComponent implements OnInit {
             this.formError = "設定完成";
           }, 100);
         }
-        //console.log(words);
-        //console.log(reWords);
-      })
-      .catch(err => {
-        this.formError = err;
-      });
+      },
+      error: (err: HttpErrorResponse) => {
+        const errResult = err.error as { message: string, data: string };
+        this.formError = errResult.message;
+      }
+    });
+    // .then(words => {
+    //   const exWords = words.map((x: { wdId: any; eng: any; chi: any; grade: any; }) => {
+    //     return { wdId: x.wdId, eng: x.eng, chi: x.chi, grade: x.grade }
+    //   });
+    //   if (this.authService.removePrjItem("exWords")) {
+    //     setTimeout(() => {
+    //       this.authService.setPrjItem("exWords", JSON.stringify(exWords));
+    //       //const reWords = JSON.parse(this.authService.getPrjItem("exWords"));
+    //       this.formError = "設定完成";
+    //     }, 100);
+    //   }
+    //   //console.log(words);
+    //   //console.log(reWords);
+    // })
+    // .catch(err => {
+    //   this.formError = err;
+    // });
   }
 
   jobDone() {
-    this.wordService.setWords(this.user!.email).then(ok => {
-      //console.log(ok.ok);
-      if (ok.ok) {
-        this.formError = "完成，繼續下批練習";
+    this.wordService.setWords(this.user!.email).subscribe({
+      next:(ok:any)=> {
+        //console.log(ok.ok);
+        if (ok.ok) {
+          this.formError = "完成，繼續下批練習";
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        const errResult = err.error as { message: string, data: string };
+        this.formError = errResult.message;
       }
-    })
+    });
+    
+    
+    // .then(ok => {
+    //   //console.log(ok.ok);
+    //   if (ok.ok) {
+    //     this.formError = "完成，繼續下批練習";
+    //   }
+    // })
   }
 }

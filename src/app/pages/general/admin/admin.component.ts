@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/classes/user';
@@ -60,25 +61,47 @@ export class AdminComponent implements OnInit {
 
   onSubmit() {
     //check parameters
-    this.generalService.updateUser(this.credentials).then(
-      data => {
+    this.generalService.updateUser(this.credentials).subscribe({
+      next:(data:any)=>{
         const { message } = data;
         this.formError = message;
       },
-      error => {
-        console.log("Something wrong here", error);
-      });
+      error: (err: HttpErrorResponse) => {
+        const errResult = err.error as { message: string, data: string };
+        this.formError = errResult.message;
+      }
+    })
+    
+    
+  //   .then(
+  //     data => {
+  //       const { message } = data;
+  //       this.formError = message;
+  //     },
+  //     error => {
+  //       console.log("Something wrong here", error);
+  //     });
   }
 
   onDelete(){
-    this.generalService.deleteUser(this.credentials.email).then(
-      data => {
+    this.generalService.deleteUser(this.credentials.email).subscribe({
+      next:(data:any)=>{
         const { message } = data;
         this.formError = message;
       },
-      error => {
-        console.log("Something wrong here", error);
-      });
+      error: (err: HttpErrorResponse) => {
+        const errResult = err.error as { message: string, data: string };
+        this.formError = errResult.message;
+      }
+    });
+    // .then(
+    //   data => {
+    //     const { message } = data;
+    //     this.formError = message;
+    //   },
+    //   error => {
+    //     console.log("Something wrong here", error);
+    //   });
 
   }
 
@@ -87,33 +110,62 @@ export class AdminComponent implements OnInit {
     if(!temMail){
       return;
     }
-    this.generalService.getAUser(temMail).then(x => {
-      const { grade, role, name, _id } = x;
+    this.generalService.getAUser(temMail).subscribe({
+      next:(x:any)=>{
+        const { grade, role, name, _id } = x;
       //this.credentials.email=email;
       this.credentials.grade = grade;
       this.credentials.name = name;
       this.credentials.role = role;
       this.credentials._id = _id;
-      console.log(x);
-      //console.log(this.credentials);
-      //this.credentials = row ;
-    });
+      },
+      error: (err: HttpErrorResponse) => {
+        const errResult = err.error as { message: string, data: string };
+        console.log(errResult);
+        //return false;
+        this.formError = errResult.message;
+      }
+    })
+    
+    // .then(x => {
+    //   const { grade, role, name, _id } = x;
+    //   //this.credentials.email=email;
+    //   this.credentials.grade = grade;
+    //   this.credentials.name = name;
+    //   this.credentials.role = role;
+    //   this.credentials._id = _id;
+    //   console.log(x);
+    //   //console.log(this.credentials);
+    //   //this.credentials = row ;
+    // });
   }
   getAutoMails() {
     if(this.isMobile){
       return;
     }
-    this.generalService.mailAutoComp().then(
-      data => {
+    this.generalService.mailAutoComp().subscribe({
+      next:(data)=>{
         this.retObj = data as { "ary": any };
         Object.assign(this.mailData, this.retObj.ary);
-        // setTimeout(() => {
-        //   console.log(this.mailData);
-        // }, 100);
+
       },
-      error => {
-        console.log("Something wrong here", error);
-      });
+      error: (err: HttpErrorResponse) => {
+        const errResult = err.error as { message: string, data: string };
+        this.formError = errResult.message;
+      }
+    })
+    
+    // then(
+    //   data => {
+    //     this.retObj = data as { "ary": any };
+    //     Object.assign(this.mailData, this.retObj.ary);
+    //     // setTimeout(() => {
+    //     //   console.log(this.mailData);
+    //     // }, 100);
+    //   },
+    //   error => {
+    //     console.log("Something wrong here", error);
+    //   });
 
   }
 

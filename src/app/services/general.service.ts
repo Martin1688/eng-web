@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { BROWSER_STORAGE } from '../classes/storage';
 import { User } from '../classes/user';
 import { Authresponse } from '../classes/authresponse';
+import { Subscriber } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,29 +34,35 @@ export class GeneralService {
     }
   }
 
-  public login(user: User): Promise<Authresponse> {
+  public login(user: User):any {
     return this.makeAuthApiCall('login', user);
   }
-  public register(user: User): Promise<Authresponse> {
+  public register(user: User){
     return this.makeAuthApiCall('register', user);
   }
-  private makeAuthApiCall(urlPath: string, user: User): Promise<Authresponse> {
+  private makeAuthApiCall(urlPath: string, user: User) {
+    //let ret:Promise<Authresponse>;
     const url: string = `${this.apiBaseUrl}/${urlPath}`;
-    return this.http
-      .post(url, user)
-      .toPromise()
-      .then(response => response as Authresponse)
-      .catch(this.handleError);
-  }
+    return this.http.post(url, user);
+  }  
+  
+  // private makeAuthApiCall(urlPath: string, user: User): Promise<Authresponse> {
+  //   const url: string = `${this.apiBaseUrl}/${urlPath}`;
+  //   return this.http
+  //     .post(url, user)
+  //     .toPromise()
+  //     .then(response => response as Authresponse)
+  //     .catch(this.handleError);
+  // }
 
 
   resetpws(userEmail: string) {
     const url: string = `${this.apiBaseUrl}/usernewpsw`;
 
     return this.http
-      .post(url, { email: userEmail })
-      .toPromise()
-      .catch(this.handleError);
+      .post(url, { email: userEmail });
+      // .toPromise()
+      // .catch(this.handleError);
   }
 
   changepws(credentials: User, oldPassword: string) {
@@ -66,11 +73,11 @@ export class GeneralService {
       })
     };
     return this.http
-      .post(url, { "email": credentials.email, "oldPassword": oldPassword, "newPassword": credentials.password }, httpOptions)
-      .toPromise()
-      .then(response => response as boolean)
-      .catch(this.handleError);
-  }
+      .post(url, { "email": credentials.email, "oldPassword": oldPassword, "newPassword": credentials.password }, httpOptions);
+  //     .toPromise()
+  //     .then(response => response as boolean)
+  //     .catch(this.handleError);
+   }
 
   mailAutoComp() {
     const url: string = `${this.apiBaseUrl}/mailcpl`;
@@ -79,10 +86,9 @@ export class GeneralService {
         'Authorization': `Bearer ${this.storage.getItem('token')}`
       })
     };
-    return this.http
-      .post(url, {}, httpOptions)
-      .toPromise()
-      .catch(this.handleError);
+    return this.http.post(url, {}, httpOptions);
+      // .toPromise()
+      // .catch(this.handleError)
   }
 
   getAUser(temMail: string) {
@@ -93,9 +99,9 @@ export class GeneralService {
       })
     };
     return this.http
-      .patch(url, { 'email': temMail }, httpOptions)
-      .toPromise()
-      .catch(this.handleError);
+      .patch(url, { 'email': temMail }, httpOptions);
+      // .toPromise()
+      // .catch(this.handleError)
   }
 
   updateUser(credentials: { 
@@ -110,9 +116,9 @@ export class GeneralService {
       })
     };
     return this.http
-      .put(url, credentials, httpOptions)
-      .toPromise()
-      .catch(this.handleError);
+      .put(url, credentials, httpOptions);
+      // .toPromise()
+      // .catch(this.handleError)
   }
 
   deleteUser(userMail:string) {
@@ -127,9 +133,9 @@ export class GeneralService {
     })
   };
   return this.http
-    .delete(url, httpOptions)
-    .toPromise()
-    .catch(this.handleError);
+    .delete(url, httpOptions);
+    // .toPromise()
+    // .catch(this.handleError)
 }
 
   // public checkAccount(uname: string): Promise<boolean> {

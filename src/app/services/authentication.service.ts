@@ -4,6 +4,7 @@ import { User } from '../classes/user';
 import { Authresponse } from '../classes/authresponse';
 import { GeneralService } from '../services/general.service';
 import { Buffer } from 'buffer';
+import { HttpErrorResponse } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,29 +25,70 @@ export class AuthenticationService {
       this.setPrjItem('token', token);
     }
   }
-  public login(user: User): Promise<any> {
-    return this.generalService.login(user)
-      .then((authResp: Authresponse) => {
-        if (user.keep) {
-          //this.setPrjItem('password', user.password);
-          this.setPrjItem('useremail', user.email);
+  public login(user: User): any {
+    this.generalService.login(user).subscribe({
+      next: (result: any) => {
+        console.log(result);
+        const { message, data } = result;
+        if (message === '') {
+          const { token, name, grade } = data;
+          this.setPrjItem('username', name)
+          this.setPrjItem('grade', grade)
+          this.saveToken(token);
+          return true;
         } else {
-          //this.storage.removeItem('password');
-          this.storage.removeItem('useremail');
+          return false;
         }
-        //console.log(authResp.name);
-        this.setPrjItem('username', authResp.name)
-        this.setPrjItem('grade', authResp.grade)
-        this.saveToken(authResp.token);
-      });
+      },
+      error: (err: HttpErrorResponse) => {
+        const errResult = err.error as { message: string, data: string };
+        console.log(errResult);
+        return false;
+        //this.formError = errResult.message;
+      }
+    });
+    // .then((authResp: any) => {
+    //   console.log(authResp);
+    //   if (user.keep) {
+    //     //this.setPrjItem('password', user.password);
+    //     this.setPrjItem('useremail', user.email);
+    //   } else {
+    //     //this.storage.removeItem('password');
+    //     this.storage.removeItem('useremail');
+    //   }
+    //   const {token,name,grade}=authResp;
+    //   this.setPrjItem('username', name)
+    //   this.setPrjItem('grade', grade)
+    //   this.saveToken(token);
+    // });
   }
-  public register(user: User): Promise<any> {
-    return this.generalService.register(user)
-      .then((authResp: Authresponse) => {
-        this.setPrjItem('username', authResp.name);
-        this.setPrjItem('grade', authResp.grade)
-        this.saveToken(authResp.token);
-      });
+  public register(user: User): any {
+    this.generalService.register(user).subscribe({
+      next: (result: any) => {
+        const { message, data } = result;
+        if (message === '') {
+          const { token, name, grade } = data;
+          this.setPrjItem('username', name)
+          this.setPrjItem('grade', grade)
+          this.saveToken(token);
+          return true;
+        } else {
+          return false;
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        const errResult = err.error as { message: string, data: string };
+        console.log(errResult);
+        return false;
+        //this.formError = errResult.message;
+      }
+    });
+    // return this.generalService.register(user)
+    //   .then((authResp: Authresponse) => {
+    //     this.setPrjItem('username', authResp.name);
+    //     this.setPrjItem('grade', authResp.grade)
+    //     this.saveToken(authResp.token);
+    //   });
   }
 
   public isLoggedIn(): boolean {
@@ -69,10 +111,10 @@ export class AuthenticationService {
 
   isWordsSet(): boolean {
     let ret = false;
-    const exwords=this.getPrjItem('exWords');
-    if(exwords){
-      const wordAry:any[] = JSON.parse(exwords);
-      ret = wordAry.length > 0; 
+    const exwords = this.getPrjItem('exWords');
+    if (exwords) {
+      const wordAry: any[] = JSON.parse(exwords);
+      ret = wordAry.length > 0;
     }
     return ret;
 

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Vcblry } from 'src/app/classes/vcblry';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -62,14 +63,30 @@ export class WordselectComponent implements OnInit {
     //console.log()
     const tIndex = this.wIndex - 1;
     if (this.ChiAnsList.length < this.wIndex) {
-      this.wordService.seizeChiStr(1).then(x => {
-        const ary = x as [1];
-        //console.log(ary[0]);
-        this.ChiAnsList.push(new ChiAns());
-        this.ChiAnsList[tIndex].chilist(ary[0].toString(), this.currentWord!.chi);
-        this.currentChiAns = this.ChiAnsList[tIndex];
-        //console.log(this.currentChiAns.chiary);
-      });
+      this.wordService.seizeChiStr(1).subscribe({
+        next:(x:any)=> {
+          const ary = x as [1];
+          //console.log(ary[0]);
+          this.ChiAnsList.push(new ChiAns());
+          this.ChiAnsList[tIndex].chilist(ary[0].toString(), this.currentWord!.chi);
+          this.currentChiAns = this.ChiAnsList[tIndex];
+          //console.log(this.currentChiAns.chiary);
+        },
+        error: (err: HttpErrorResponse) => {
+          // const errResult = err.error as { message: string, data: string };
+          // this.formError = errResult.message;
+        }
+      })
+      
+      
+      // .then(x => {
+      //   const ary = x as [1];
+      //   //console.log(ary[0]);
+      //   this.ChiAnsList.push(new ChiAns());
+      //   this.ChiAnsList[tIndex].chilist(ary[0].toString(), this.currentWord!.chi);
+      //   this.currentChiAns = this.ChiAnsList[tIndex];
+      //   //console.log(this.currentChiAns.chiary);
+      // });
     } else {
       this.currentChiAns = this.ChiAnsList[tIndex];
       //console.log(this.currentChiAns.chiary);

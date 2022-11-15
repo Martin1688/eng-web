@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -22,8 +23,8 @@ export class ResetpasswordComponent implements OnInit {
   }
 
   onResetSubmit(){
-    this.generalService.resetpws(this.userEmail)
-      .then((x) => { 
+    this.generalService.resetpws(this.userEmail).subscribe({
+      next:(x:any) => { 
         console.log(x);
         const {message} = x;
         this.formError=message;
@@ -32,10 +33,28 @@ export class ResetpasswordComponent implements OnInit {
         // setTimeout(() => {
            this.router.navigateByUrl('/general/login');          
         // }, 200);       
-      })
-      .catch((message) => {
-        this.formError = message
-      });
+      },
+      error: (err: HttpErrorResponse) => {
+        const errResult = err.error as { message: string, data: string };
+        this.formError = errResult.message;
+      }
+    });
+
+
+
+      // .then((x) => { 
+      //   console.log(x);
+      //   const {message} = x;
+      //   this.formError=message;
+      //   //document.location.reload();
+      //   // this.authenticationService.getCurrentUser();
+      //   // setTimeout(() => {
+      //      this.router.navigateByUrl('/general/login');          
+      //   // }, 200);       
+      // })
+      // .catch((message) => {
+      //   this.formError = message
+      // });
 
   }
 }

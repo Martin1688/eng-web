@@ -53,12 +53,12 @@ export class VocabularyService {
       })
     };
     return this.http
-      .patch(url,{email:emailuser, wordCount:count, grade:myGrade},httpOptions)
-      .toPromise()
-      // .then(response => {
-      //   console.log(response);
-      // })
-      .catch(this.handleError);
+      .patch(url,{email:emailuser, wordCount:count, grade:myGrade},httpOptions);
+      // .toPromise()
+      // // .then(response => {
+      // //   console.log(response);
+      // // })
+      // .catch(this.handleError);
   }
   public getAutoComp(stChar:string){
     const url: string = `${this.apiBaseUrl}/complete`;
@@ -85,7 +85,7 @@ export class VocabularyService {
         'Authorization': `Bearer ${this.authService.getToken()}`
       })
     };
-    return this.http.post(url,{word:wordId},httpOptions).toPromise();
+    return this.http.post(url,{word:wordId},httpOptions);//.toPromise()
   }
 
   getASentence(eng: string) {
@@ -96,7 +96,7 @@ export class VocabularyService {
       })
     };
     //console.log(url);
-    return this.http.patch(url,{word:eng},httpOptions).toPromise();
+    return this.http.patch(url,{word:eng},httpOptions);//.toPromise()
   }
 
 
@@ -108,10 +108,10 @@ export class VocabularyService {
       })
     };
     return this.http
-      .post(url,{email:emailuser},httpOptions)
-      .toPromise()
-      .then(response => response as boolean)
-      .catch(this.handleError);
+      .post(url,{email:emailuser},httpOptions);
+      // .toPromise()
+      // .then(response => response as boolean)
+      // .catch(this.handleError);
   }
   
   seizeChiStr(cnt: number) {
@@ -122,8 +122,8 @@ export class VocabularyService {
       })
     };
     return this.http
-      .patch(url,{length:cnt},httpOptions)
-      .toPromise();
+      .patch(url,{length:cnt},httpOptions);
+      //.toPromise();
   }
 
 }

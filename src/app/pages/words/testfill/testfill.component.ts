@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Vcblry } from 'src/app/classes/vcblry';
@@ -19,8 +20,8 @@ export class TestfillComponent implements OnInit {
   message = "";
   errCorrect = '';
   redoFlag = false;
-  hideWord='';
-  chiHint= false;
+  hideWord = '';
+  chiHint = false;
   constructor(private router: Router,
     private wordService: VocabularyService,
     private authService: AuthenticationService) {
@@ -39,11 +40,11 @@ export class TestfillComponent implements OnInit {
   }
 
   reset() {
-    this.wIndex=1;
-    this.errCount=0;
-    this.redoFlag=false;
-    this.errCorrect="";
-    this.message='';
+    this.wIndex = 1;
+    this.errCount = 0;
+    this.redoFlag = false;
+    this.errCorrect = "";
+    this.message = '';
     this.currentWord = this.wordAry[this.wIndex - 1];
     if (!this.currentWord.sentence) {
       this.getSentence();
@@ -53,8 +54,8 @@ export class TestfillComponent implements OnInit {
   }
 
   onEnter() {
-    this.errCorrect='';
-    this.chiHint=false;
+    this.errCorrect = '';
+    this.chiHint = false;
     if (this.exWord === this.currentWord!.eng) {
       this.message = "正確";
       this.errCorrect = '';
@@ -82,50 +83,66 @@ export class TestfillComponent implements OnInit {
 
   getSentence() {
     //console.log('go fetch eng '+ this.currentWord.eng);
-    const wd =this.currentWord!.eng;
-    this.wordService.getASentence(wd).then(x => {
-      //console.log(x);
-      const y = x as {word:string};
-      //console.log(this.hideWord+'martin');
-      const kWord=y.word.indexOf(this.currentWord!.eng) > -1 ?  this.currentWord!.eng : this.currentWord!.eng.charAt(0).toUpperCase()+ this.currentWord!.eng.substr(1);
-      this.currentWord!.eng=kWord;
-      this.getHideWord(kWord,(hWord: string)=>{
-        this.currentWord!.sentence =y.word.replace(kWord, hWord);
-      });
+    const wd = this.currentWord!.eng;
+    this.wordService.getASentence(wd).subscribe({
+      next: (x: any) => {
+        const y = x as { word: string };
+        //console.log(this.hideWord+'martin');
+        const kWord = y.word.indexOf(this.currentWord!.eng) > -1 ? this.currentWord!.eng : this.currentWord!.eng.charAt(0).toUpperCase() + this.currentWord!.eng.substr(1);
+        this.currentWord!.eng = kWord;
+        this.getHideWord(kWord, (hWord: string) => {
+          this.currentWord!.sentence = y.word.replace(kWord, hWord);
+        });
+      },
+      error: (err: HttpErrorResponse) => {
+        // const errResult = err.error as { message: string, data: string };
+        // this.formError = errResult.message;
+      }
+    })
 
-    }).catch(err => {
-      this.message = err;
-      console.log(err);
-    });
+    // .then(x => {
+    //   //console.log(x);
+    //   const y = x as {word:string};
+    //   //console.log(this.hideWord+'martin');
+    //   const kWord=y.word.indexOf(this.currentWord!.eng) > -1 ?  this.currentWord!.eng : this.currentWord!.eng.charAt(0).toUpperCase()+ this.currentWord!.eng.substr(1);
+    //   this.currentWord!.eng=kWord;
+    //   this.getHideWord(kWord,(hWord: string)=>{
+    //     this.currentWord!.sentence =y.word.replace(kWord, hWord);
+    //   });
+
+    // }).catch(err => {
+    //   this.message = err;
+    //   console.log(err);
+    // });
   }
 
-  getHideWord(kWord:string, callback: { (hWord: string): void; (arg0: string): void; }){
+  getHideWord(kWord: string, callback: { (hWord: string): void; (arg0: string): void; }) {
     //console.log(kWord);
     //const endchar =;
-    if(kWord.length > 5){
-      this.hideWord=kWord.substr(0,1);
-      for(let i =1; i<= kWord.length; i++){
-        if(i === (kWord.length)){
-          this.hideWord += kWord.substr(kWord.length-1);
+    if (kWord.length > 5) {
+      this.hideWord = kWord.substr(0, 1);
+      for (let i = 1; i <= kWord.length; i++) {
+        if (i === (kWord.length)) {
+          this.hideWord += kWord.substr(kWord.length - 1);
           callback(this.hideWord);
         } else {
           this.hideWord += '_';
-        }        
-      }      
+        }
+      }
     } else {
-      this.hideWord='_';
-      for(let i =1; i<= kWord.length; i++){
-        if(i === (kWord.length)){
-          this.hideWord +='_';
+      this.hideWord = '_';
+      for (let i = 1; i <= kWord.length; i++) {
+        if (i === (kWord.length)) {
+          this.hideWord += '_';
           callback(this.hideWord);
         } else {
           this.hideWord += '_';
-        }        
-        }        
+        }
+      }
     }
   }
 
-  hint(){
-    this.chiHint=!this.chiHint;
+  hint() {
+    this.chiHint = !this.chiHint;
   }
 }
